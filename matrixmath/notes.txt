@@ -1,0 +1,79 @@
+
+//The determinant of a matrix
+
+To determine the invertibility of a matrix, a row of zeros means a matrix is not invertible.
+
+Defn;: Given a square matrix, A, The determinant of a matrix is a number that determines the invertibility of A.
+
+Notation
+det(A) = |A|
+
+If det(A) = 0, A is not invertible, and vise versa.
+
+Case I:
+A is 1x1
+
+A=|a|
+
+| A ; I_1 | -> | a ; 1|
+
+1/a Row_1 -> Row_1
+
+|1 ; 1/a|
+
+
+Case 2:
+
+A is 2x2
+
+|A ; I_2| -> |a b ; 1 0|
+             |c d ; 0 1|
+
+aRow_2 -> Row_2
+
+|a  b  ; 1  0|
+|ac ad ; 0  a|
+
+Row_2 - cRow_1 = Row_2
+
+|a   b   ; 1  0|
+|0 ad-bc ; -c a|
+
+ad - bc = det(A)
+
+Case 3:
+go to one drive im not writing this out lol
+
+
+
+defn:
+Given an nxn matrix, A, the ij-minor of A is the determinant of the (n-1)x(n-1)
+matrix created by eliminating the ith row and jth column of A.
+
+
+Cofactor Matrix
+Given a nxn matrix, A, its matrix of cofactors is the matrix whose entries are the cofactors of A.
+Notation
+
+M_c
+[M_c_ij] = [C_ij]
+
+A = |1 2|
+    |3 4|
+M_c = [+4 -3]
+      [-2 +1]
+
+Defn: The adjoint of A is the transpose of the matrix of cofactors of A.
+Notation adj(a) = M_c^T
+
+A = |1 2|
+    |3 4|
+M_c = [4 -3]
+      [-2 1]
+
+M_c^T = [4 -2]
+        [-3 1]
+
+The inverse of A^-1
+
+A^-1 = 1/det(A) * adf(A)

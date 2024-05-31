@@ -1,0 +1,7 @@
+Debug/
+Release/
+x64/
+matrixmath/Debug/
+matrixmath/Release/
+matrixmath/x64/
+.vs/
