@@ -31,13 +31,20 @@ public:
 	void setRows(size_t newRows);
 	void setColms(size_t newColms);
 
-	void addWith(const Matrix& other);
 	Matrix add(const Matrix& other) const;
+	Matrix operator+(const Matrix& other) const;
+
+	void addWith(const Matrix& other);
+	void operator+=(const Matrix& other);
+
+	Matrix mult(float coef) const;
+	Matrix operator*(float coef) const;
 
 	Matrix mult(const Matrix& other) const;
+	Matrix operator*(const Matrix& other) const;
 
-	void cMultWith(float coef);
-	Matrix cMult(float coef) const;
+	void multWith(float coef);
+	void operator*=(float coef);
 
 	void printMatrix() const;
 
@@ -47,10 +54,9 @@ public:
 	//Matrix cipher(Matrix cipherMatrix) const;
 	float getDeterminant();
 
-	void toTranspose();
-	Matrix getTranspose();
+	Matrix transpose() const;
 
-
+	friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 
 
 	//

@@ -1,5 +1,22 @@
 #include "Matrix.h"
 
+std::ostream& operator<<(std::ostream& os, const Matrix& matrix)
+{
+	for (int i = 0; i < matrix.getRows(); i++)
+	{
+		os << "| ";
+
+		for (int j = 0; j < matrix.getColms(); j++)
+		{
+			os << matrix.vals[i][j] << " ";
+		}
+
+		os << "|" << std::endl;
+	}
+
+	return os;
+}
+
 Matrix::Matrix(size_t rows, size_t colms)
 	: rows(rows)
 	, colms(colms)
@@ -103,20 +120,6 @@ void Matrix::setColms(size_t newColms)
 	this->colms = newColms;
 }
 
-void Matrix::addWith(const Matrix& other)
-{
-	if ((this->rows != other.getRows()) || (this->colms != other.getColms()))
-		throw std::invalid_argument("All matrices must have the same dimensions.");
-
-	for (int i = 0; i < this->rows; i++)
-	{
-		for (int j = 0; j < this->colms; j++)
-		{
-			this->vals[i][j] += other.vals[i][j];
-		}
-	}
-}
-
 Matrix Matrix::add(const Matrix& other) const
 {
 	// 3 approaches:
@@ -138,6 +141,50 @@ Matrix Matrix::add(const Matrix& other) const
 	}
 
 	return sumMatrix;
+}
+
+Matrix Matrix::operator+(const Matrix& other) const
+{
+	return this->add(other);
+}
+
+void Matrix::addWith(const Matrix& other)
+{
+	if ((this->rows != other.getRows()) || (this->colms != other.getColms()))
+		throw std::invalid_argument("All matrices must have the same dimensions.");
+
+	for (int i = 0; i < this->rows; i++)
+	{
+		for (int j = 0; j < this->colms; j++)
+		{
+			this->vals[i][j] += other.vals[i][j];
+		}
+	}
+}
+
+void Matrix::operator+=(const Matrix& other)
+{
+	this->addWith(other);
+}
+
+Matrix Matrix::mult(float coef) const
+{
+	Matrix productMatrix = Matrix(*this);
+
+	for (int i = 0; i < this->rows; i++)
+	{
+		for (int j = 0; j < this->colms; j++)
+		{
+			productMatrix.vals[i][j] *= coef;
+		}
+	}
+
+	return productMatrix;
+}
+
+Matrix Matrix::operator*(float coef) const
+{
+	return this->mult(coef);
 }
 
 Matrix Matrix::mult(const Matrix& other) const
@@ -167,7 +214,12 @@ Matrix Matrix::mult(const Matrix& other) const
 	return productMatrix;
 }
 
-void Matrix::cMultWith(float coef)
+Matrix Matrix::operator*(const Matrix& other) const
+{
+	return this->mult(other);
+}
+
+void Matrix::multWith(float coef)
 {
 	for (int i = 0; i < this->rows; i++)
 	{
@@ -178,19 +230,9 @@ void Matrix::cMultWith(float coef)
 	}
 }
 
-Matrix Matrix::cMult(float coef) const
+void Matrix::operator*=(float coef)
 {
-	Matrix productMatrix = Matrix(*this);
-
-	for (int i = 0; i < this->rows; i++)
-	{
-		for (int j = 0; j < this->colms; j++)
-		{
-			productMatrix.vals[i][j] *= coef;
-		}
-	}
-
-	return productMatrix;
+	this->multWith(coef);
 }
 
 void Matrix::printMatrix() const
@@ -274,7 +316,7 @@ float Matrix::getDeterminant()
 	return product;
 }
 
-void Matrix::toTranspose()
+Matrix Matrix::transpose() const
 {
 	Matrix temp(this->colms, this->rows);
 
@@ -286,9 +328,10 @@ void Matrix::toTranspose()
 		}
 	}
 
-	*this = temp;
-
+	return temp;
 }
+
+
 
 //void Matrix::toRef() const
 //{
